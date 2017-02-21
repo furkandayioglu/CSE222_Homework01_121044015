@@ -37,4 +37,22 @@ public interface User {
      * @param surname to set User's Surname
      */
     public  void   setSurname(String surname);
+
+    /**
+     * Returns userPassword
+     */
+    public String getPassword();
+
+    /**
+     * @param pass To Set UserPassword
+     */
+
+    public void setPassword(String pass);
+
+    /**
+     * @param username Sets userID
+     */
+
+    public void setUserID(String username);
 }
+

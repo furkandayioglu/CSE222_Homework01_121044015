@@ -10,27 +10,9 @@ public class LibraryUser implements User {
 
     private String name;
     private String surname;
+    private String password;
+    private String username;
 
-    public String getName() {
-        return null;
-    }
-
-    public String getSurname() {
-        return null;
-    }
-
-    public String UserID() {
-        return null;
-    }
-
-
-    public void setName(String name) {
-
-    }
-
-    public void setSurname(String surname) {
-            this.surname=surname;
-    }
 
     @Override
     public boolean equals(Object o) {
@@ -40,5 +22,45 @@ public class LibraryUser implements User {
     @Override
     public String toString() {
         return super.toString();
+    }
+
+    @Override
+    public String getName() {
+        return null;
+    }
+
+    @Override
+    public String getSurname() {
+        return null;
+    }
+
+    @Override
+    public String UserID() {
+        return null;
+    }
+
+    @Override
+    public void setName(String name) {
+
+    }
+
+    @Override
+    public void setSurname(String surname) {
+
+    }
+
+    @Override
+    public String getPassword() {
+        return null;
+    }
+
+    @Override
+    public void setPassword(String pass) {
+
+    }
+
+    @Override
+    public void setUserID(String username) {
+
     }
 }

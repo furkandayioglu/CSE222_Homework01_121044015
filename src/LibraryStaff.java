@@ -6,7 +6,13 @@
  * Course : CSE222 Data Structures and Algorithms
  * StudentID: 121044015
  */
-public class LibraryStaff extends SystemAdmin {
+public class LibraryStaff implements User {
+
+    private String name;
+    private String surname;
+    private String password;
+    private String username;
+
 
     @Override
     public String getName() {
@@ -23,7 +29,6 @@ public class LibraryStaff extends SystemAdmin {
         return null;
     }
 
-
     @Override
     public void setName(String name) {
 
@@ -35,32 +40,17 @@ public class LibraryStaff extends SystemAdmin {
     }
 
     @Override
-    public void BorrowBook(Book book) {
+    public String getPassword() {
+        return null;
+    }
+
+    @Override
+    public void setPassword(String pass) {
 
     }
 
     @Override
-    public void ReturnBook(Book book) {
-
-    }
-
-    @Override
-    public void AddBookToDatabase(Book book) {
-
-    }
-
-    @Override
-    public void DeleteBookFromDataBase(Book book) {
-
-    }
-
-    @Override
-    public void AddNewUser(User user) {
-
-    }
-
-    @Override
-    public void DeleteUser(User user) {
+    public void setUserID(String username) {
 
     }
 }
