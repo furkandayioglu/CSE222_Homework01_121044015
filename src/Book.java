@@ -10,6 +10,7 @@ public class Book {
 
     private String  bookName;
     private String  Author;
+    private String  bookCode;
     private int     page;
     private int     count; // Count of this book in database
     private boolean available; // true if the any copy more, false if there is no more copy available
@@ -24,6 +25,7 @@ public class Book {
         this.setPage(0);
         this.setCount(0);
         this.setAvailable(false);
+        this.setBookCode(null);
     }
 
     /**
@@ -45,6 +47,15 @@ public class Book {
         this.setPage(page);
         this.setCount(count);
         this.setAvailable(available);
+    }
+
+    public Book(String bookName, String author, String bookCode, int page, int count, boolean available) {
+        this.bookName = bookName;
+        Author = author;
+        this.bookCode = bookCode;
+        this.page = page;
+        this.count = count;
+        this.available = available;
     }
 
     public String getBookName() {
@@ -80,12 +91,22 @@ public class Book {
     }
 
     public boolean isAvailable() {
+        if (this.count >=1){
+            this.available=true;
+        }else{
+            this.available=false;
+        }
+
         return available;
     }
 
     public void setAvailable(boolean available) {
         this.available = available;
     }
+
+    public String getBookCode(){ return this.bookCode;}
+
+    public void   setBookCode(String code){ this.bookCode = code;}
 
     @Override
     public boolean equals(Object o) {

@@ -12,55 +12,103 @@ public class LibraryUser implements User {
     private String surname;
     private String password;
     private String username;
+    private String recentBookCode;
 
+    public LibraryUser() {
 
-    @Override
-    public boolean equals(Object o) {
-        return super.equals(o);
+        setName(null);
+        setSurname(null);
+        setSurname(null);
+        setUserID(null);
+        setPassword(null);
+        setRecentBookCode(null);
     }
 
-    @Override
-    public String toString() {
-        return super.toString();
+    public LibraryUser(String password, String username) {
+        this.password = password;
+        this.username = username;
+    }
+
+    public LibraryUser(String name, String surname, String password, String username) {
+        this.name = name;
+        this.surname = surname;
+        this.password = password;
+        this.username = username;
+    }
+
+    public LibraryUser(String name, String surname, String password, String username, String recentBookCode) {
+        this.name = name;
+        this.surname = surname;
+        this.password = password;
+        this.username = username;
+        this.recentBookCode = recentBookCode;
     }
 
     @Override
     public String getName() {
-        return null;
+        return this.name;
     }
 
     @Override
     public String getSurname() {
-        return null;
+        return this.surname;
     }
 
     @Override
     public String UserID() {
-        return null;
+        return this.username;
     }
 
     @Override
     public void setName(String name) {
-
+        this.name=name;
     }
 
     @Override
     public void setSurname(String surname) {
-
+        this.surname = surname;
     }
 
     @Override
     public String getPassword() {
-        return null;
+        return this.password;
     }
 
     @Override
     public void setPassword(String pass) {
-
+        this.password=pass;
     }
 
     @Override
     public void setUserID(String username) {
+            this.username=username;
+    }
+
+    public String getRecentBookCode(){return this.recentBookCode;}
+
+    public void setRecentBookCode(String code){this.recentBookCode= code;}
+
+    @Override
+    public boolean equals(Object o) {
+        if(this == o){
+            return true;
+        }if (this.getClass() == o.getClass()){
+            LibraryUser lU = (LibraryUser) o;
+            return ((this.getName() == lU.getName()) &&
+                    (this.getSurname() == lU.getSurname()) &&
+                    (this.UserID() == lU.UserID() ) &&
+                    (this.getPassword() == lU.getPassword()));
+
+        }else return false;
 
     }
+
+    @Override
+    public String toString()
+    {
+        String libraryUser = "Name : "+this.getName()+"\nSurname : "+this.getSurname();
+
+        return libraryUser;
+    }
+
 }
