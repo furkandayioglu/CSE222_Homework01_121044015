@@ -3,6 +3,7 @@
  */
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 
 /**
@@ -42,11 +43,14 @@ public class Database {
         return ourInstance;
     }
 
-    public void readUserFromCSVFile(String filename){
-        BufferedReader userFile = new BufferedReader(new FileReader(filename));
+    public void readUserFromCSVFile(String filename)  {
+        BufferedReader userFile;
 
             try {
-                userFile.
+                userFile  = new BufferedReader(new FileReader(filename));
+
+            }catch (FileNotFoundException e){
+
             }
     }
 
