@@ -140,8 +140,12 @@ public class Database {
 
             while ((line =bookFile.readLine()) != null) {
               Book temp = new Book();
-                String[] userInfo = line.split(split);
-                temp.
+                String[] bookinfo = line.split(split);
+                temp.setBookCode(bookinfo[0]);
+                temp.setBookName(bookinfo[1]);
+                temp.setAuthor(bookinfo[2]);
+                temp.setPage(Integer.parseInt(bookinfo[3]));
+                temp.setAvailable(true);
                 this.addBook(temp);
                 i++;
             }
@@ -185,5 +189,35 @@ public class Database {
 
    public void addBook(Book newBook){
 
+
+       if(books.length < bookCapacity)
+       {
+           books[books.length].setBookName(newBook.getBookName());
+           books[books.length].setBookCode(newBook.getBookCode());
+           books[books.length].setPage(newBook.getPage());
+           books[books.length].setAuthor(newBook.getAuthor());
+       }else{
+           Book[] temp = new Book[bookCapacity*2];
+           temp = Arrays.copyOf(books,books.length);
+           books = null;
+           books =  new Book[bookCapacity*2];
+           books = Arrays.copyOf(temp,temp.length);
+           books[books.length].setBookName(newBook.getBookName());
+           books[books.length].setBookCode(newBook.getBookCode());
+           books[books.length].setPage(newBook.getPage());
+           books[books.length].setAuthor(newBook.getAuthor());
+
+       }
+
+   }
+
+   private boolean isThereAnyBook(Book book){
+
+       for(int i = 0 ; i< books.length ;i++){
+           if(books[i].equals(book) == true)
+               return true;
+       }
+
+       return false;
    }
 }
