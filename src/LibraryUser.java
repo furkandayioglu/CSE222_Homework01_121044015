@@ -34,6 +34,7 @@ public class LibraryUser implements User {
         this.surname = surname;
         this.password = password;
         this.username = username;
+        this.recentBookCode = null;
     }
 
     public LibraryUser(String name, String surname, String password, String username, String recentBookCode) {
