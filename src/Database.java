@@ -20,8 +20,8 @@ import java.util.Arrays;
 public class Database {
     private Book[] books = new Book[40];
     private User[] users = new User[40];
-    private  int userCapacity = 40;
-    private  int bookCapacity = 40;
+    private int userCapacity = 40;
+    private int bookCapacity = 40;
     private static Database ourInstance = new Database();
 
     /**
@@ -50,6 +50,12 @@ public class Database {
             }
         }
         return ourInstance;
+    }
+
+    public void initializeDatabase() {
+        this.readBooksFromCsvFile("bookList.csv");
+        this.readLibraryStaffFromCSVFile("staffList.csv");
+        this.readLibraryUserFromCSVFile("userList.csv");
     }
 
     public void readLibraryUserFromCSVFile(String filename) {
@@ -128,7 +134,7 @@ public class Database {
 
     }
 
-    public void readBooksFromCsvFile( String filename){
+    public void readBooksFromCsvFile(String filename) {
         BufferedReader bookFile = null;
         String split = ",";
         String line = ""; // hail the brother mykyong
@@ -138,8 +144,8 @@ public class Database {
         try {
             bookFile = new BufferedReader(new FileReader(filename));
 
-            while ((line =bookFile.readLine()) != null) {
-              Book temp = new Book();
+            while ((line = bookFile.readLine()) != null) {
+                Book temp = new Book();
                 String[] bookinfo = line.split(split);
                 temp.setBookCode(bookinfo[0]);
                 temp.setBookName(bookinfo[1]);
@@ -166,19 +172,19 @@ public class Database {
 
 
     }
+
     public void addUser(User newUser) {
-        if(users.length < userCapacity)
-        {
+        if (users.length < userCapacity) {
             users[users.length].setName(newUser.getName());
             users[users.length].setSurname(newUser.getSurname());
             users[users.length].setUserID(newUser.UserID());
             users[users.length].setPassword(newUser.getPassword());
-        }else{
-            User[] temp = new User[userCapacity*2];
-            temp = Arrays.copyOf(users,users.length);
+        } else {
+            User[] temp = new User[userCapacity * 2];
+            temp = Arrays.copyOf(users, users.length);
             users = null;
             users = new User[userCapacity];
-            users = Arrays.copyOf(temp,temp.length);
+            users = Arrays.copyOf(temp, temp.length);
             users[users.length].setName(newUser.getName());
             users[users.length].setSurname(newUser.getSurname());
             users[users.length].setUserID(newUser.UserID());
@@ -187,37 +193,57 @@ public class Database {
         }
     }
 
-   public void addBook(Book newBook){
+    public boolean addBook(Book newBook) {
+        if (isThereAnyBook(newBook) == true) {
+            for (int i = 0; i < books.length; i++) {
+                if (books[i].equals(newBook) == true)
+                    books[i].setCount(books[i].getCount() + 1);
+            }
 
 
-       if(books.length < bookCapacity)
-       {
-           books[books.length].setBookName(newBook.getBookName());
-           books[books.length].setBookCode(newBook.getBookCode());
-           books[books.length].setPage(newBook.getPage());
-           books[books.length].setAuthor(newBook.getAuthor());
-       }else{
-           Book[] temp = new Book[bookCapacity*2];
-           temp = Arrays.copyOf(books,books.length);
-           books = null;
-           books =  new Book[bookCapacity*2];
-           books = Arrays.copyOf(temp,temp.length);
-           books[books.length].setBookName(newBook.getBookName());
-           books[books.length].setBookCode(newBook.getBookCode());
-           books[books.length].setPage(newBook.getPage());
-           books[books.length].setAuthor(newBook.getAuthor());
+            return false;
+        }
 
-       }
 
-   }
+        if (books.length < bookCapacity) {
+            books[books.length].setBookName(newBook.getBookName());
+            books[books.length].setBookCode(newBook.getBookCode());
+            books[books.length].setPage(newBook.getPage());
+            books[books.length].setAuthor(newBook.getAuthor());
+            return true;
+        } else {
+            Book[] temp = new Book[bookCapacity * 2];
+            temp = Arrays.copyOf(books, books.length);
+            books = null;
+            books = new Book[bookCapacity * 2];
+            books = Arrays.copyOf(temp, temp.length);
+            books[books.length].setBookName(newBook.getBookName());
+            books[books.length].setBookCode(newBook.getBookCode());
+            books[books.length].setPage(newBook.getPage());
+            books[books.length].setAuthor(newBook.getAuthor());
+            return true;
+        }
 
-   private boolean isThereAnyBook(Book book){
+    }
 
-       for(int i = 0 ; i< books.length ;i++){
-           if(books[i].equals(book) == true)
-               return true;
-       }
+    public boolean isThereAnyBook(Book book) {
 
-       return false;
-   }
+        for (int i = 0; i < books.length; i++) {
+            if (books[i].equals(book) == true)
+                return true;
+        }
+
+        return false;
+    }
+
+
+    public boolean isThereAnyMember(User user) {
+
+        for (int i = 0; i < users.length; i++) {
+            if (users[i].equals(user) == true)
+                return true;
+        }
+        return false;
+    }
+
 }
