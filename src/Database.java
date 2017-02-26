@@ -3,7 +3,6 @@
  */
 
 import java.io.*;
-import java.util.Arrays;
 
 /**
  * @author Furkan Sergen Dayioglu
@@ -18,10 +17,11 @@ import java.util.Arrays;
 
  */
 public class Database {
-    private Book[] books = new Book[40];
-    private User[] users = new User[40];
-    private int userCapacity = 40;
-    private int bookCapacity = 40;
+    private Book[] books = new Book[INIT_CAPACITY_];
+    private User[] users = new User[INIT_CAPACITY_];
+    private static int INIT_CAPACITY_=40;
+    private int userUsed = 0;
+    private int bookUsed = 0;
     private static Database ourInstance = new Database();
 
     /**
@@ -101,7 +101,7 @@ public class Database {
         String line = ""; // hail the brother mykyong
         // csv reading code is gotten there
         // https://www.mkyong.com/java/how-to-read-and-parse-csv-file-in-java/
-        int i = users.length;
+        int i = userUsed;
         try {
             userFile = new BufferedReader(new FileReader(filename));
 
@@ -159,6 +159,8 @@ public class Database {
 
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
         } finally {
             if (bookFile != null) {
                 try {
@@ -173,60 +175,91 @@ public class Database {
     }
 
     public void addUser(User newUser) {
-        if (users.length < userCapacity) {
-            users[users.length].setName(newUser.getName());
-            users[users.length].setSurname(newUser.getSurname());
-            users[users.length].setUserID(newUser.UserID());
-            users[users.length].setPassword(newUser.getPassword());
-        } else {
-            User[] temp = new User[userCapacity * 2];
-            temp = Arrays.copyOf(users, users.length);
-            users = null;
-            users = new User[userCapacity];
-            users = Arrays.copyOf(temp, temp.length);
-            users[users.length].setName(newUser.getName());
-            users[users.length].setSurname(newUser.getSurname());
-            users[users.length].setUserID(newUser.UserID());
-            users[users.length].setPassword(newUser.getPassword());
 
+        if (this.userUsed < users.length-1) {
+            users[userUsed].setName(newUser.getName());
+            users[userUsed].setSurname(newUser.getSurname());
+            users[userUsed].setUserID(newUser.UserID());
+            users[userUsed].setPassword(newUser.getPassword());
+            userUsed++;
+        } else {
+            User[] temp = new User[userUsed];
+            //userCapacity *=2;
+           //temp = Arrays.copyOf(users, users.length);
+            for(int i =0 ; i<userUsed;i++){
+                temp[i].setName(users[i].getName());
+                temp[i].setSurname(users[i].getSurname());
+                temp[i].setUserID(users[i].UserID());
+                temp[i].setPassword(users[i].getPassword());
+            }
+            users = null;
+            users = new User[userUsed*2];
+            //users = Arrays.copyOf(temp, temp.length);
+            for(int i =0 ; i<userUsed;i++){
+                users[i].setName(temp[i].getName());
+                users[i].setSurname(temp[i].getSurname());
+                users[i].setUserID(temp[i].UserID());
+                users[i].setPassword(temp[i].getPassword());
+            }
+            users[userUsed].setName(newUser.getName());
+            users[userUsed].setSurname(newUser.getSurname());
+            users[userUsed].setUserID(newUser.UserID());
+            users[userUsed].setPassword(newUser.getPassword());
+                userUsed++;
         }
     }
 
-    public boolean addBook(Book newBook) {
-        if (isThereAnyBook(newBook) == true) {
-            for (int i = 0; i < books.length; i++) {
-                if (books[i].equals(newBook) == true) books[i].setCount(books[i].getCount() + 1);
+    public void addBook(Book newBook) throws Exception {
+        if(this.isThereAnyBook(newBook) == true) {
+            throw new Exception("This book is already in Database");
+        }
+
+        if (this.bookUsed < books.length-1) {
+            books[bookUsed].setBookName(newBook.getBookName());
+            books[bookUsed].setBookCode(newBook.getBookCode());
+            books[bookUsed].setPage(newBook.getPage());
+            books[bookUsed].setAuthor(newBook.getAuthor());
+            bookUsed++;
+
+        } else {
+            Book[] temp = new Book[bookUsed];
+            //bookCapacity*=2;
+           // temp = Arrays.copyOf(books, books.length);
+            for(int i =0 ; i<bookUsed;i++){
+                temp[i].setBookCode(books[i].getBookCode());
+                temp[i].setBookName(books[i].getBookName());
+                temp[i].setAuthor(books[i].getAuthor());
+                temp[i].setPage(books[i].getPage());
+                temp[i].setCount(books[i].getCount());
+                temp[i].setAvailable(books[i].isAvailable());
             }
 
-
-            return false;
-        }
-
-
-        if (books.length < bookCapacity) {
-            books[books.length].setBookName(newBook.getBookName());
-            books[books.length].setBookCode(newBook.getBookCode());
-            books[books.length].setPage(newBook.getPage());
-            books[books.length].setAuthor(newBook.getAuthor());
-            return true;
-        } else {
-            Book[] temp = new Book[bookCapacity * 2];
-            temp = Arrays.copyOf(books, books.length);
             books = null;
-            books = new Book[bookCapacity * 2];
-            books = Arrays.copyOf(temp, temp.length);
-            books[books.length].setBookName(newBook.getBookName());
-            books[books.length].setBookCode(newBook.getBookCode());
-            books[books.length].setPage(newBook.getPage());
-            books[books.length].setAuthor(newBook.getAuthor());
-            return true;
+            books = new Book[bookUsed * 2];
+            //books = Arrays.copyOf(temp, temp.length);
+            for(int i =0 ; i<bookUsed;i++){
+                books[i].setBookCode(temp[i].getBookCode());
+                books[i].setBookName(temp[i].getBookName());
+                books[i].setAuthor(temp[i].getAuthor());
+                books[i].setPage(temp[i].getPage());
+                books[i].setCount(temp[i].getCount());
+                books[i].setAvailable(temp[i].isAvailable());
+            }
+
+            books[bookUsed].setBookName(newBook.getBookName());
+            books[bookUsed].setBookCode(newBook.getBookCode());
+            books[bookUsed].setPage(newBook.getPage());
+            books[bookUsed].setAuthor(newBook.getAuthor());
+            bookUsed++;
+
         }
+
 
     }
 
     public boolean isThereAnyBook(Book book) {
 
-        for (int i = 0; i < books.length; i++) {
+        for (int i = 0; i < bookUsed; i++) {
             if (books[i].equals(book) == true) return true;
         }
 
@@ -236,7 +269,7 @@ public class Database {
 
     public boolean isThereAnyMember(User user) {
 
-        for (int i = 0; i < users.length; i++) {
+        for (int i = 0; i < userUsed; i++) {
             if (users[i].equals(user) == true) return true;
         }
         return false;
@@ -250,10 +283,12 @@ public class Database {
         books[bookIndex].setPage(0);
         books[bookIndex].setBookName(null);
         books[bookIndex].setAuthor(null);
+
+        bookUsed--;
     }
 
     public int findBook(Book book) {
-        for (int i = 0; i < books.length; i++) {
+        for (int i = 0; i < bookUsed; i++) {
             if (books[i].equals(book) == true) {
                 return i;
             }
@@ -275,7 +310,7 @@ public class Database {
     }
     public Book getBook(int i){
         try{
-            if(i <0 || i> bookCapacity) {
+            if(i <0 || i> bookUsed) {
                 throw new ArrayIndexOutOfBoundsException("Invalid Index Value");
             }
 
@@ -284,5 +319,91 @@ public class Database {
             e.printStackTrace();
         }
       return null;
+    }
+
+    public int findUser(User user){
+        for(int i = 0; i<userUsed;i++){
+            if(users[i].equals(user) == true){
+                return i;
+            }
+        }
+        return -1;
+    }
+    public User getUser(User user){
+        if(this.isThereAnyMember(user) == true)
+        {
+            int i = findUser(user);
+
+            if(i != -1)
+                return users[i];
+            else
+                return null;
+        }
+        return null;
+    }
+
+    public void writeToFiletheRecords(){
+        FileWriter writer = null;
+
+        try{
+            writer= new FileWriter("bookList.csv");
+           for(int i=0; i<bookUsed;i++){
+               writer.write(books[i].toString());
+               writer.write('\n');
+           }
+
+        }catch(IOException e){
+            e.printStackTrace();
+        }finally {
+            try{
+                writer.flush();
+                writer.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        writer=null;
+        try{
+            writer = new FileWriter("userList.csv");
+            int i=0;
+            while(i<userUsed){
+                if(users[i] instanceof LibraryUser){
+                writer.write(users[i].toString());
+                writer.write('\n');}
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }finally {
+            try{
+                writer.flush();
+                writer.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+
+        writer=null;
+        try{
+            writer = new FileWriter("staffList.csv");
+            int i=0;
+            while(i<userUsed){
+                if(users[i] instanceof LibraryStaff){
+                    writer.write(users[i].toString());
+                    writer.write('\n');}
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }finally {
+            try{
+                writer.flush();
+                writer.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

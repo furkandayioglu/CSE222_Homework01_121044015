@@ -13,6 +13,7 @@ public class LibraryUser implements User {
     private String password;
     private String username;
     private String recentBookCode;
+    private Database db = Database.getInstance();
 
     public LibraryUser() {
 
@@ -45,42 +46,40 @@ public class LibraryUser implements User {
         this.recentBookCode = recentBookCode;
     }
 
-    @Override
     public String getName() {
         return this.name;
     }
 
-    @Override
+
     public String getSurname() {
         return this.surname;
     }
 
-    @Override
+
     public String UserID() {
         return this.username;
     }
 
-    @Override
+
     public void setName(String name) {
         this.name=name;
     }
 
-    @Override
     public void setSurname(String surname) {
         this.surname = surname;
     }
 
-    @Override
+
     public String getPassword() {
         return this.password;
     }
 
-    @Override
+
     public void setPassword(String pass) {
         this.password=pass;
     }
 
-    @Override
+
     public void setUserID(String username) {
             this.username=username;
     }
@@ -107,18 +106,26 @@ public class LibraryUser implements User {
     @Override
     public String toString()
     {
-        String libraryUser = "Name : "+this.getName()+"\nSurname : "+this.getSurname();
+        String libraryUser = this.getName()+","+this.getSurname()+","+this.UserID()+","+this.getPassword();
 
         return libraryUser;
     }
-
-    public void borrowABook(Book book){
-
-        if(Database.getInstance().isThereAnyBook(book) == true && this.recentBookCode==null)
-        {
-            this.setRecentBookCode(book.getBookCode());
-
-        }
-
-    }
+    //   public void borrowABook(Book book){
+//
+//        if((Database.getInstance().isThereAnyBook(book) == true && this.recentBookCode==null) && (Database.getInstance().getBook(book)).getCount()>0)
+//        {
+//            this.setRecentBookCode(book.getBookCode());
+//            Database.getInstance().getBook(book).setCount(Database.getInstance().getBook(book).getCount()-1);
+//        }
+//
+//    }
+//
+//    public void returnBook(Book book){
+//        if(Database.getInstance().isThereAnyBook(book) == true){
+//            Database.getInstance().getBook(book).setCount(Database.getInstance().getBook(book).getCount()+1);
+//        }else
+//        {
+//            Database.getInstance().addBook(book);
+//        }
+//    }
 }

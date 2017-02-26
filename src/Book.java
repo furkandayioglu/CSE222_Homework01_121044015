@@ -112,6 +112,11 @@ public class Book {
 
     public void   setBookCode(String code){ this.bookCode = code;}
 
+    /**
+     * Checks if they are equals
+     * @param o is the object that we will compare with this
+     * @return
+     */
     @Override
     public boolean equals(Object o) {
         if(this==o){
@@ -131,9 +136,13 @@ public class Book {
             return false;
     }
 
+    /**
+     *
+     * @return string value according to csv format
+     */
     @Override
     public String toString() {
-        String bookInfo = "Book Name : "+this.getBookName()+"\nBook Author : "+this.getAuthor()+"\nPage : "+this.getPage();
+        String bookInfo = this.getBookCode()+","+this.getBookName()+","+this.getAuthor()+","+this.getPage();
         return bookInfo;
     }
 }

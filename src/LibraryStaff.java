@@ -12,6 +12,7 @@ public class LibraryStaff implements User {
     private String surname;
     private String password;
     private String username;
+    private Database db = Database.getInstance();
 
     public LibraryStaff() {
 
@@ -29,42 +30,42 @@ public class LibraryStaff implements User {
         this.username = username;
     }
 
-    @Override
+
     public String getName() {
         return name;
     }
 
-    @Override
+
     public String getSurname() {
         return this.surname;
     }
 
-    @Override
+
     public String UserID() {
         return this.username;
     }
 
-    @Override
+
     public void setName(String name) {
             this.name=name;
     }
 
-    @Override
+
     public void setSurname(String surname) {
         this.surname = surname;
     }
 
-    @Override
+
     public String getPassword() {
         return this.password;
     }
 
-    @Override
+
     public void setPassword(String pass) {
         this.password = pass;
     }
 
-    @Override
+
     public void setUserID(String username) {
         this.username=username;
     }
@@ -88,23 +89,24 @@ public class LibraryStaff implements User {
 
     @Override
     public String toString() {
-        return super.toString();
+        String staff =this.getName()+","+this.getSurname()+","+this.UserID()+","+this.getPassword();
+        return staff;
     }
 
-    public boolean giveBook(Book book, LibraryUser libUser){
-
-         if(Database.getInstance().isThereAnyBook(book)==true && book.isAvailable() == true && Database.getInstance().isThereAnyMember(libUser) == true){
-                libUser.setRecentBookCode(book.getBookCode());
-                book.setCount(book.getCount()-1);
-         }
-        return false;
-    }
-
-    public void addBook(Book newBook){
-        Database.getInstance().addBook(newBook);
-    }
-
-    public void deleteBook(Book delete){
-        Database.getInstance().deleteBook(delete);
-    }
+//    public boolean giveBook(Book book, LibraryUser libUser){
+//
+//         if(Database.getInstance().isThereAnyBook(book)==true && book.isAvailable() == true && Database.getInstance().isThereAnyMember(libUser) == true){
+//                libUser.setRecentBookCode(book.getBookCode());
+//                book.setCount(book.getCount()-1);
+//         }
+//        return false;
+//    }
+//
+//    public void addBook(Book newBook){
+//        Database.getInstance().addBook(newBook);
+//    }
+//
+//    public void deleteBook(Book delete){
+//        Database.getInstance().deleteBook(delete);
+//    }
 }
