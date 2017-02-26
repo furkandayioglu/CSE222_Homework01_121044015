@@ -112,4 +112,13 @@ public class LibraryUser implements User {
         return libraryUser;
     }
 
+    public void borrowABook(Book book){
+
+        if(Database.getInstance().isThereAnyBook(book) == true && this.recentBookCode==null)
+        {
+            this.setRecentBookCode(book.getBookCode());
+
+        }
+
+    }
 }

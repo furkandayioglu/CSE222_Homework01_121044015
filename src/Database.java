@@ -45,8 +45,7 @@ public class Database {
 
         if (ourInstance == null) {
             synchronized (Database.class) { // for thread safety
-                if (ourInstance == null)
-                    ourInstance = new Database();// Singleton object
+                if (ourInstance == null) ourInstance = new Database();// Singleton object
             }
         }
         return ourInstance;
@@ -196,8 +195,7 @@ public class Database {
     public boolean addBook(Book newBook) {
         if (isThereAnyBook(newBook) == true) {
             for (int i = 0; i < books.length; i++) {
-                if (books[i].equals(newBook) == true)
-                    books[i].setCount(books[i].getCount() + 1);
+                if (books[i].equals(newBook) == true) books[i].setCount(books[i].getCount() + 1);
             }
 
 
@@ -229,8 +227,7 @@ public class Database {
     public boolean isThereAnyBook(Book book) {
 
         for (int i = 0; i < books.length; i++) {
-            if (books[i].equals(book) == true)
-                return true;
+            if (books[i].equals(book) == true) return true;
         }
 
         return false;
@@ -240,10 +237,52 @@ public class Database {
     public boolean isThereAnyMember(User user) {
 
         for (int i = 0; i < users.length; i++) {
-            if (users[i].equals(user) == true)
-                return true;
+            if (users[i].equals(user) == true) return true;
         }
         return false;
     }
 
+    public void deleteBook(Book delete) {
+        int bookIndex = findBook(delete);
+
+        books[bookIndex].setCount(0);
+        books[bookIndex].setBookCode(null);
+        books[bookIndex].setPage(0);
+        books[bookIndex].setBookName(null);
+        books[bookIndex].setAuthor(null);
+    }
+
+    public int findBook(Book book) {
+        for (int i = 0; i < books.length; i++) {
+            if (books[i].equals(book) == true) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public Book getBook(Book book){
+        if(this.isThereAnyBook(book) == true)
+        {
+            int i = findBook(book);
+
+            if(i != -1)
+                return books[i];
+            else
+                return null;
+        }
+        return null;
+    }
+    public Book getBook(int i){
+        try{
+            if(i <0 || i> bookCapacity) {
+                throw new ArrayIndexOutOfBoundsException("Invalid Index Value");
+            }
+
+                return books[i];
+        }catch(ArrayIndexOutOfBoundsException e){
+            e.printStackTrace();
+        }
+      return null;
+    }
 }

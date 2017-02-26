@@ -90,4 +90,21 @@ public class LibraryStaff implements User {
     public String toString() {
         return super.toString();
     }
+
+    public boolean giveBook(Book book, LibraryUser libUser){
+
+         if(Database.getInstance().isThereAnyBook(book)==true && book.isAvailable() == true && Database.getInstance().isThereAnyMember(libUser) == true){
+                libUser.setRecentBookCode(book.getBookCode());
+                book.setCount(book.getCount()-1);
+         }
+        return false;
+    }
+
+    public void addBook(Book newBook){
+        Database.getInstance().addBook(newBook);
+    }
+
+    public void deleteBook(Book delete){
+        Database.getInstance().deleteBook(delete);
+    }
 }
