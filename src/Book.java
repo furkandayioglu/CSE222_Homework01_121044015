@@ -41,6 +41,15 @@ public class Book {
         this.setCount(1);
         this.setAvailable(true);
     }
+
+    /**
+     * Constract book
+     * @param BookName
+     * @param BookAuthor
+     * @param page
+     * @param count
+     * @param available
+     */
     public Book(String BookName,String BookAuthor,int page, int count,boolean available){
         this.setBookName(BookName);
         this.setAuthor(BookAuthor);
@@ -49,42 +58,82 @@ public class Book {
         this.setAvailable(available);
     }
 
-    public Book(String bookName, String author, String bookCode, int page, int count, boolean available) {
+    /**
+     * Cosntruct book
+     * @param bookName
+     * @param author
+     * @param bookCode
+     * @param page
+     */
+    public Book(String bookName, String author, String bookCode, int page) {
         this.bookName = bookName;
         Author = author;
         this.bookCode = bookCode;
         this.page = page;
-        this.count = count;
-        this.available = available;
+        this.count = 1;
+        this.available = true;
     }
 
+    /**
+     * Get book sane
+     * @return stirng book name
+     */
     public String getBookName() {
         return bookName;
     }
 
+    /**
+     * Set book name
+     * @param bookName
+     */
     public void setBookName(String bookName) {
         this.bookName = bookName;
     }
 
+    /**
+     * getAuthor name
+     * @return string as Author book
+     */
     public String getAuthor() {
         return Author;
     }
 
+    /**
+     * Author set
+     * @param author
+     */
     public void setAuthor(String author) {
         Author = author;
     }
 
+    /**
+     * get Page count of the book
+     * @return page count of book
+     */
     public int getPage() {
         return page;
     }
 
+    /**
+     * set Page count of a book
+     * @param page
+     */
     public void setPage(int page) {
         this.page = page;
     }
 
+    /**
+     * How many of this book in this library
+     * @return the count of THIS book
+     */
     public int getCount() {
         return count;
     }
+
+    /**
+     * Set count of book;
+     * @param count
+     */
 
     public void setCount(int count) {
 
@@ -92,7 +141,10 @@ public class Book {
             this.count=count;
     }
 
-
+    /**
+     * Checks if the book is avaliable
+     * @return true if book count greater than zero
+     */
 
     public boolean isAvailable() {
         if (this.count >=1){
@@ -131,7 +183,7 @@ public class Book {
 
             return((book.getBookName()== this.getBookName()) &&
                    (this.getAuthor()==book.getAuthor()) &&
-                   (this.getPage()==book.getPage()));
+                   (this.getBookCode()==book.getBookCode()));
         }else
             return false;
     }

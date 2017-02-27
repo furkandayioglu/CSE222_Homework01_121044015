@@ -1,10 +1,11 @@
 /**
  * Created by furka on 19.02.2017.
  */
+
 /**
  * @author Furkan Sergen Dayioglu
- * Course : CSE222 Data Structures and Algorithms
- * StudentID: 121044015
+ *         Course : CSE222 Data Structures and Algorithms
+ *         StudentID: 121044015
  */
 public class LibraryUser implements User {
 
@@ -15,6 +16,9 @@ public class LibraryUser implements User {
     private String recentBookCode;
     private Database db = Database.getInstance();
 
+    /**
+     * No parameter Constructor
+     */
     public LibraryUser() {
 
         setName(null);
@@ -25,12 +29,26 @@ public class LibraryUser implements User {
         setRecentBookCode(null);
     }
 
-    public LibraryUser(String password, String username) {
+    /**
+     * Just construct a book with usename and password
+     *
+     * @param username
+     * @param password
+     */
+    public LibraryUser(String username, String password) {
         this.password = password;
         this.username = username;
     }
 
-    public LibraryUser(String name, String surname, String password, String username) {
+    /**
+     * Construct an almost full user with these parameters
+     *
+     * @param name
+     * @param surname
+     * @param username
+     * @param password
+     */
+    public LibraryUser(String name, String surname, String username, String password) {
         this.name = name;
         this.surname = surname;
         this.password = password;
@@ -38,7 +56,16 @@ public class LibraryUser implements User {
         this.recentBookCode = null;
     }
 
-    public LibraryUser(String name, String surname, String password, String username, String recentBookCode) {
+    /**
+     * Cosntructs a total user with whole parameters
+     *
+     * @param name
+     * @param surname
+     * @param username
+     * @param password
+     * @param recentBookCode
+     */
+    public LibraryUser(String name, String surname, String username, String password, String recentBookCode) {
         this.name = name;
         this.surname = surname;
         this.password = password;
@@ -46,86 +73,141 @@ public class LibraryUser implements User {
         this.recentBookCode = recentBookCode;
     }
 
+    /**
+     * get name
+     *
+     * @return name
+     */
     public String getName() {
         return this.name;
     }
 
-
+    /**
+     * get surname
+     *
+     * @return surname
+     */
     public String getSurname() {
         return this.surname;
     }
 
-
+    /**
+     * returns user id
+     *
+     * @return username
+     */
     public String UserID() {
         return this.username;
     }
 
-
+    /**
+     * @param name to set User's Name
+     */
     public void setName(String name) {
-        this.name=name;
+        this.name = name;
     }
 
+    /**
+     * @param surname to set User's Surname
+     */
     public void setSurname(String surname) {
         this.surname = surname;
     }
 
-
+    /**
+     * @return password
+     */
     public String getPassword() {
         return this.password;
     }
 
-
+    /**
+     * @param pass To Set UserPassword
+     */
     public void setPassword(String pass) {
-        this.password=pass;
+        this.password = pass;
     }
 
-
+    /**
+     * @param username Sets userID
+     */
     public void setUserID(String username) {
-            this.username=username;
+        this.username = username;
     }
 
-    public String getRecentBookCode(){return this.recentBookCode;}
+    /**
+     * Get recentBookCode if user has bOrrOwed a book from library
+     *
+     * @return bookCode
+     */
+    public String getRecentBookCode() {
+        return this.recentBookCode;
+    }
 
-    public void setRecentBookCode(String code){this.recentBookCode= code;}
+    /**
+     * Set book code if user borrows a book
+     *
+     * @param code set if user BORROWs a book
+     */
+    public void setRecentBookCode(String code) {
+        this.recentBookCode = code;
+    }
 
+    /**
+     * Check equality the object and this
+     *
+     * @param o object
+     * @return true if this and o equals
+     */
     @Override
     public boolean equals(Object o) {
-        if(this == o){
+        if (this == o) {
             return true;
-        }if (this.getClass() == o.getClass()){
+        }
+        if (this.getClass() == o.getClass()) {
             LibraryUser lU = (LibraryUser) o;
-            return ((this.getName() == lU.getName()) &&
-                    (this.getSurname() == lU.getSurname()) &&
-                    (this.UserID() == lU.UserID() ) &&
-                    (this.getPassword() == lU.getPassword()));
+            return ((this.UserID() == lU.UserID()) && (this.getPassword() == lU.getPassword()));
 
-        }else return false;
+        } else return false;
 
     }
 
+    /**
+     * @return a string that suiatable to print into csv file
+     */
     @Override
-    public String toString()
-    {
-        String libraryUser = this.getName()+","+this.getSurname()+","+this.UserID()+","+this.getPassword();
+    public String toString() {
+        String libraryUser = this.getName() + "," + this.getSurname() + "," + this.UserID() + "," + this.getPassword();
 
         return libraryUser;
     }
-    //   public void borrowABook(Book book){
-//
-//        if((Database.getInstance().isThereAnyBook(book) == true && this.recentBookCode==null) && (Database.getInstance().getBook(book)).getCount()>0)
-//        {
-//            this.setRecentBookCode(book.getBookCode());
-//            Database.getInstance().getBook(book).setCount(Database.getInstance().getBook(book).getCount()-1);
-//        }
-//
-//    }
-//
-//    public void returnBook(Book book){
-//        if(Database.getInstance().isThereAnyBook(book) == true){
-//            Database.getInstance().getBook(book).setCount(Database.getInstance().getBook(book).getCount()+1);
-//        }else
-//        {
-//            Database.getInstance().addBook(book);
-//        }
-//    }
+
+    /**
+     *  What if user want to ask a BORROW a book
+     * @param book that user want to borrow
+     */
+    public void borrowABook(Book book) {
+
+        if ((Database.getInstance().isThereAnyBook(book) == true && this.recentBookCode == null) && (Database.getInstance().getBook(book)).getCount() > 0) {
+            this.setRecentBookCode(book.getBookCode());
+            Database.getInstance().getBook(book).setCount(Database.getInstance().getBook(book).getCount() - 1);
+        }
+
+    }
+
+    /**
+     * Returnes borrowed book to LIBRARY
+     * @param book
+     */
+    public void returnBook(Book book) {
+        if (Database.getInstance().isThereAnyBook(book) == true) {
+            Database.getInstance().getBook(book).setCount(Database.getInstance().getBook(book).getCount() + 1);
+        } else {
+            try {
+                Database.getInstance().addBook(book);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }

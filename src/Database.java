@@ -51,12 +51,19 @@ public class Database {
         return ourInstance;
     }
 
+    /**
+     * İnitialize database with csv files
+     */
     public void initializeDatabase() {
         this.readBooksFromCsvFile("bookList.csv");
         this.readLibraryStaffFromCSVFile("staffList.csv");
         this.readLibraryUserFromCSVFile("userList.csv");
     }
 
+    /**
+     * read users from cvs file
+     * @param filename to read a file
+     */
     public void readLibraryUserFromCSVFile(String filename) {
         BufferedReader userFile = null;
         String split = ",";
@@ -95,6 +102,10 @@ public class Database {
 
     }
 
+    /**
+     * Read Staff from csv file
+     * @param filename to read file
+     */
     public void readLibraryStaffFromCSVFile(String filename) {
         BufferedReader userFile = null;
         String split = ",";
@@ -133,6 +144,10 @@ public class Database {
 
     }
 
+    /**
+     * Read books from csv file
+     * @param filename
+     */
     public void readBooksFromCsvFile(String filename) {
         BufferedReader bookFile = null;
         String split = ",";
@@ -174,51 +189,62 @@ public class Database {
 
     }
 
+    /**
+     * add user to database. Library staff's method calls this
+     * @param newUser
+     */
     public void addUser(User newUser) {
 
         if (this.userUsed < users.length-1) {
-            users[userUsed].setName(newUser.getName());
-            users[userUsed].setSurname(newUser.getSurname());
-            users[userUsed].setUserID(newUser.UserID());
-            users[userUsed].setPassword(newUser.getPassword());
+//            users[userUsed].setName(newUser.getName());
+//            users[userUsed].setSurname(newUser.getSurname());
+//            users[userUsed].setUserID(newUser.UserID());
+//            users[userUsed].setPassword(newUser.getPassword());
+            users[userUsed] = newUser;
             userUsed++;
         } else {
             User[] temp = new User[userUsed];
             //userCapacity *=2;
            //temp = Arrays.copyOf(users, users.length);
             for(int i =0 ; i<userUsed;i++){
-                temp[i].setName(users[i].getName());
-                temp[i].setSurname(users[i].getSurname());
-                temp[i].setUserID(users[i].UserID());
-                temp[i].setPassword(users[i].getPassword());
+//                temp[i].setName(users[i].getName());
+//                temp[i].setSurname(users[i].getSurname());
+//                temp[i].setUserID(users[i].UserID());
+//                temp[i].setPassword(users[i].getPassword());
+                temp[i]=users[i];
             }
             users = null;
             users = new User[userUsed*2];
             //users = Arrays.copyOf(temp, temp.length);
             for(int i =0 ; i<userUsed;i++){
-                users[i].setName(temp[i].getName());
-                users[i].setSurname(temp[i].getSurname());
-                users[i].setUserID(temp[i].UserID());
-                users[i].setPassword(temp[i].getPassword());
+//                users[i].setName(temp[i].getName());
+//                users[i].setSurname(temp[i].getSurname());
+//                users[i].setUserID(temp[i].UserID());
+//                users[i].setPassword(temp[i].getPassword());
+                users[i]=temp[i];
             }
-            users[userUsed].setName(newUser.getName());
-            users[userUsed].setSurname(newUser.getSurname());
-            users[userUsed].setUserID(newUser.UserID());
-            users[userUsed].setPassword(newUser.getPassword());
+
+            users[userUsed]=newUser;
                 userUsed++;
         }
     }
 
+    /**
+     * Add book to database. Library staff's  method calls this
+     * @param newBook
+     * @throws Exception
+     */
     public void addBook(Book newBook) throws Exception {
         if(this.isThereAnyBook(newBook) == true) {
             throw new Exception("This book is already in Database");
         }
 
         if (this.bookUsed < books.length-1) {
-            books[bookUsed].setBookName(newBook.getBookName());
-            books[bookUsed].setBookCode(newBook.getBookCode());
-            books[bookUsed].setPage(newBook.getPage());
-            books[bookUsed].setAuthor(newBook.getAuthor());
+//            books[bookUsed].setBookName(newBook.getBookName());
+//            books[bookUsed].setBookCode(newBook.getBookCode());
+//            books[bookUsed].setPage(newBook.getPage());
+//            books[bookUsed].setAuthor(newBook.getAuthor());
+                books[bookUsed] = newBook;
             bookUsed++;
 
         } else {
@@ -226,30 +252,34 @@ public class Database {
             //bookCapacity*=2;
            // temp = Arrays.copyOf(books, books.length);
             for(int i =0 ; i<bookUsed;i++){
-                temp[i].setBookCode(books[i].getBookCode());
-                temp[i].setBookName(books[i].getBookName());
-                temp[i].setAuthor(books[i].getAuthor());
-                temp[i].setPage(books[i].getPage());
-                temp[i].setCount(books[i].getCount());
-                temp[i].setAvailable(books[i].isAvailable());
+//                temp[i].setBookCode(books[i].getBookCode());
+//                temp[i].setBookName(books[i].getBookName());
+//                temp[i].setAuthor(books[i].getAuthor());
+//                temp[i].setPage(books[i].getPage());
+//                temp[i].setCount(books[i].getCount());
+//                temp[i].setAvailable(books[i].isAvailable());
+
+                temp[i]= books[i];
             }
 
             books = null;
             books = new Book[bookUsed * 2];
             //books = Arrays.copyOf(temp, temp.length);
             for(int i =0 ; i<bookUsed;i++){
-                books[i].setBookCode(temp[i].getBookCode());
-                books[i].setBookName(temp[i].getBookName());
-                books[i].setAuthor(temp[i].getAuthor());
-                books[i].setPage(temp[i].getPage());
-                books[i].setCount(temp[i].getCount());
-                books[i].setAvailable(temp[i].isAvailable());
+//                books[i].setBookCode(temp[i].getBookCode());
+//                books[i].setBookName(temp[i].getBookName());
+//                books[i].setAuthor(temp[i].getAuthor());
+//                books[i].setPage(temp[i].getPage());
+//                books[i].setCount(temp[i].getCount());
+//                books[i].setAvailable(temp[i].isAvailable());
+                books[i]=temp[i];
             }
 
-            books[bookUsed].setBookName(newBook.getBookName());
-            books[bookUsed].setBookCode(newBook.getBookCode());
-            books[bookUsed].setPage(newBook.getPage());
-            books[bookUsed].setAuthor(newBook.getAuthor());
+//            books[bookUsed].setBookName(newBook.getBookName());
+//            books[bookUsed].setBookCode(newBook.getBookCode());
+//            books[bookUsed].setPage(newBook.getPage());
+//            books[bookUsed].setAuthor(newBook.getAuthor());
+            books[bookUsed]=newBook;
             bookUsed++;
 
         }
@@ -257,6 +287,11 @@ public class Database {
 
     }
 
+    /**
+     * Checks if the param book in the database
+     * @param book to search in database
+     * @return true if exist
+     */
     public boolean isThereAnyBook(Book book) {
 
         for (int i = 0; i < bookUsed; i++) {
@@ -267,6 +302,11 @@ public class Database {
     }
 
 
+    /**
+     * Checks if param user in system
+     * @param user to seach in db
+     * @return true if exist
+     */
     public boolean isThereAnyMember(User user) {
 
         for (int i = 0; i < userUsed; i++) {
@@ -275,6 +315,10 @@ public class Database {
         return false;
     }
 
+    /**
+     * delete book
+     * @param delete to delete which book
+     */
     public void deleteBook(Book delete) {
         int bookIndex = findBook(delete);
 
@@ -287,6 +331,11 @@ public class Database {
         bookUsed--;
     }
 
+    /**
+     *  Find book bu given book
+     * @param book to find
+     * @return index
+     */
     public int findBook(Book book) {
         for (int i = 0; i < bookUsed; i++) {
             if (books[i].equals(book) == true) {
@@ -296,6 +345,11 @@ public class Database {
         return -1;
     }
 
+    /**
+     * Get book by book object
+     * @param book to search and get
+     * @return Book if the book exist and avaliable
+     */
     public Book getBook(Book book){
         if(this.isThereAnyBook(book) == true)
         {
@@ -308,6 +362,12 @@ public class Database {
         }
         return null;
     }
+
+    /**
+     * returns book by adress
+     * @param i index to find book
+     * @return
+     */
     public Book getBook(int i){
         try{
             if(i <0 || i> bookUsed) {
@@ -321,6 +381,13 @@ public class Database {
       return null;
     }
 
+    /**
+     *  Finds user by user object
+     * @param user to search
+     * @return User if the user exist
+     */
+
+
     public int findUser(User user){
         for(int i = 0; i<userUsed;i++){
             if(users[i].equals(user) == true){
@@ -329,6 +396,12 @@ public class Database {
         }
         return -1;
     }
+
+    /**
+     * get user by index
+     * @param user to search
+     * @return User if param user exist
+     */
     public User getUser(User user){
         if(this.isThereAnyMember(user) == true)
         {
@@ -342,6 +415,9 @@ public class Database {
         return null;
     }
 
+    /**
+     * When program finish call this method to write your db into files
+     */
     public void writeToFiletheRecords(){
         FileWriter writer = null;
 
@@ -405,5 +481,33 @@ public class Database {
                 e.printStackTrace();
             }
         }
+    }
+
+    /**
+     * Checks if username and pass valid
+     * @param username
+     * @param pass
+     * @return true if avaliable
+     */
+    public boolean isValidUser(String username, String pass){
+        for(int i = 0 ; i<userUsed ; i++){
+                if((users[i].UserID() == username) && (users[i].getPassword()==pass))
+                        return true;
+        }
+        return false;
+    }
+
+    /**
+     * retruns user by its username and pass
+     * @param UserName
+     * @param pass
+     * @return User if There is any valid user by these paramaters
+     */
+    public User getUser(String UserName, String pass){
+            for(int i=0;i<userUsed;i++){
+                if((users[i].UserID() == UserName) && (users[i].getPassword()==pass))
+                    return users[i];
+            }
+      return null;
     }
 }

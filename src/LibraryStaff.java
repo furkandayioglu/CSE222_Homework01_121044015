@@ -14,15 +14,30 @@ public class LibraryStaff implements User {
     private String username;
     private Database db = Database.getInstance();
 
+    /**
+     * No parameter constructor
+     */
     public LibraryStaff() {
 
     }
 
+    /**
+     * Creates staff with username and passwprd
+     * @param password
+     * @param username
+     */
     public LibraryStaff(String password, String username) {
         this.password = password;
         this.username = username;
     }
 
+    /**
+     * Creates total Staff
+     * @param name
+     * @param surname
+     * @param password
+     * @param username
+     */
     public LibraryStaff(String name, String surname, String password, String username) {
         this.name = name;
         this.surname = surname;
@@ -31,45 +46,75 @@ public class LibraryStaff implements User {
     }
 
 
+    /**
+     *
+     * @return name of staff
+     */
     public String getName() {
         return name;
     }
 
-
+    /**
+     *
+     * @return surname of staff
+     */
     public String getSurname() {
         return this.surname;
     }
 
-
+    /**
+     *
+     * @return username of staff
+     */
     public String UserID() {
         return this.username;
     }
 
-
+    /**
+     *
+     * @param name to set User's Name
+     */
     public void setName(String name) {
             this.name=name;
     }
 
-
+    /**
+     *
+     * @param surname to set User's Surname
+     */
     public void setSurname(String surname) {
         this.surname = surname;
     }
 
-
+    /**
+     *
+     * @return paswaord of staff
+     */
     public String getPassword() {
         return this.password;
     }
 
-
+    /**
+     *
+     * @param pass To Set UserPassword
+     */
     public void setPassword(String pass) {
         this.password = pass;
     }
 
-
+    /**
+     *
+     * @param username Sets userID
+     */
     public void setUserID(String username) {
         this.username=username;
     }
 
+    /**
+     * checks if staffs are same
+     * @param o object
+     * @return true if staffs are same
+     */
     @Override
     public boolean equals(Object o) {
         if(this==o){
@@ -78,35 +123,64 @@ public class LibraryStaff implements User {
         }
         if(this.getClass() == o.getClass()){
             LibraryStaff lS = (LibraryStaff) o;
-            return ((this.getName() == lS.getName())&&
-                    (this.getSurname() == lS.getSurname())&&
-                    (this.UserID() == lS.UserID()) &&
+            return ((this.UserID() == lS.UserID()) &&
                     (this.getPassword() == lS.getPassword()));
         }else
             return false;
 
     }
 
+    /**
+     *
+     * @return a string suitable to csv format
+     */
     @Override
     public String toString() {
         String staff =this.getName()+","+this.getSurname()+","+this.UserID()+","+this.getPassword();
         return staff;
     }
 
-//    public boolean giveBook(Book book, LibraryUser libUser){
-//
-//         if(Database.getInstance().isThereAnyBook(book)==true && book.isAvailable() == true && Database.getInstance().isThereAnyMember(libUser) == true){
-//                libUser.setRecentBookCode(book.getBookCode());
-//                book.setCount(book.getCount()-1);
-//         }
-//        return false;
-//    }
-//
-//    public void addBook(Book newBook){
-//        Database.getInstance().addBook(newBook);
-//    }
-//
-//    public void deleteBook(Book delete){
-//        Database.getInstance().deleteBook(delete);
-//    }
+    /**
+     *  Gives a book to given user
+     * @param book that will be given
+     * @param libUser that will read book
+     * @return true if giving operation was successfull
+     */
+    public boolean giveBook(Book book, LibraryUser libUser){
+
+         if(Database.getInstance().isThereAnyBook(book)==true && book.isAvailable() == true && Database.getInstance().isThereAnyMember(libUser) == true){
+                libUser.setRecentBookCode(book.getBookCode());
+                book.setCount(book.getCount()-1);
+         }
+        return false;
+    }
+
+    /**
+     * Adds a book to database
+     * @param newBook to add
+     */
+    public void addBook(Book newBook) {
+        try {
+            Database.getInstance().addBook(newBook);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Delete book from data base
+     * @param delete to delete
+     */
+    public void deleteBook(Book delete){
+        Database.getInstance().deleteBook(delete);
+    }
+
+    /**
+     * ADd user to database
+     * @param newFella to add
+     */
+    public void addUser(User newFella){
+
+        Database.getInstance().addUser(newFella);
+    }
 }
